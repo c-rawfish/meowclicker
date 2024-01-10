@@ -6,6 +6,9 @@
 - Simulated mouse jitter
 - Active toggle (use LMB to autoclick once enabled)
 - ImGUI user interface to control settings
+- Toggle hotkey (F6)
+- Auto BlockHit
+- "Minecraft Window Only" checkbox
 
 ## Install
 To get the latest version of meowclicker, navigate to the releases tab and download the latest version.
@@ -31,9 +34,6 @@ Features to be added soon!
 Alternatively, if you're tired of waiting, open a pull request and contribute!
 
 - Click sounds
-- Customizable toggle hotkey
 - Bridge/right clicker
 - Config saving
 - Additional customization options
-- Window selector (only click on certain windows, like Minecraft)
-- Autoblock
