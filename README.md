@@ -1,5 +1,5 @@
 # meowclicker
-### A lightweight, humanized autoclicker written in C++
+### may or may not be asscociated with meowware
 
 ## Features
 - Min/max cps sliders with randomization
