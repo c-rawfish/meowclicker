@@ -23,10 +23,13 @@ int __stdcall wWinMain(
 
 		float cps = inputmath::getRandomFloat(config::minCPS, config::maxCPS + 1);
 
-		if (GetAsyncKeyState(VK_F6) & 1 && !wasPressed)
+		if (GetAsyncKeyState(VK_F6))
 		{
-			wasPressed = true;
-			config::enabled = !config::enabled;
+			if (!wasPressed)
+			{
+				wasPressed = true;
+				config::enabled = !config::enabled;
+			}
 		}
 		else { wasPressed = false; }
 
