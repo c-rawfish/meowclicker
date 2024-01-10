@@ -246,7 +246,7 @@ void gui::Render() noexcept
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
 	ImGui::Begin(
-		"meowclicker v1.0",
+		"meowclicker v1.1",
 		&isRunning,
 		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoSavedSettings |
@@ -255,6 +255,8 @@ void gui::Render() noexcept
 	);
 
 	ImGui::Checkbox("enabled", &config::enabled);
+	ImGui::Checkbox("minecraft window only", &config::mcWindow);
+	ImGui::Text("toggle hotkey is f6");
 	ImGui::Text("hold lmb when enabled to click");
 
 	ImGui::NewLine();
@@ -262,6 +264,7 @@ void gui::Render() noexcept
 	ImGui::SliderFloat("min cps", &config::minCPS, 0, 20, "%.3f");
 	ImGui::SliderFloat("max cps", &config::maxCPS, 0, 20, "%.3f");
 	ImGui::SliderFloat("jitter", &config::jitter, 0, 2, "%.3f");
+	ImGui::SliderFloat("blockhit chance", &config::blockChance, 0, 100, "%.3f");
 
 	if (config::minCPS > config::maxCPS)
 	{

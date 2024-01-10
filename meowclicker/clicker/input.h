@@ -12,6 +12,6 @@ namespace inputmath
 
 namespace input
 {
-	void sendClick();
+	void sendClick(float blockChance);
 	void sendJitter(float jitterFactor);
 }

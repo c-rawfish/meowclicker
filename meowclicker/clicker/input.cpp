@@ -31,13 +31,20 @@ namespace input
 	POINT mousePos{ 0, 0 };
 	HWND foreground{ GetForegroundWindow() };
 
-	void sendClick()
+	void sendClick(float blockChance)
 	{
 		GetCursorPos(&mousePos);
 		foreground = GetForegroundWindow();
+
+		LPARAM mouseParam = MAKELPARAM(mousePos.x, mousePos.y);
 		
-		PostMessageA(foreground, WM_LBUTTONDOWN, 0, MAKELPARAM(mousePos.x, mousePos.y));
-		PostMessageA(foreground, WM_LBUTTONUP, 0, MAKELPARAM(mousePos.x, mousePos.y));
+		PostMessageA(foreground, WM_LBUTTONDOWN, 0, mouseParam);
+		if (inputmath::getRandomFloat(0, 100) < blockChance)
+		{
+			PostMessageA(foreground, WM_RBUTTONDOWN, 0, mouseParam);
+			PostMessageA(foreground, WM_RBUTTONUP, 0, mouseParam);
+		}
+		PostMessageA(foreground, WM_LBUTTONUP, 0, mouseParam);
 	}
 
 	void sendJitter(float jitterFactor)

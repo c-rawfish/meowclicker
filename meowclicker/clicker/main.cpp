@@ -10,10 +10,11 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	gui::CreateHWindow("meowclicker v1.0");
+	gui::CreateHWindow("meowclicker v1.1");
 	gui::CreateDevice();
 	gui::CreateImGui();
 
+	bool wasPressed = false;
 	while (gui::isRunning)
 	{
 		gui::BeginRender();
@@ -22,9 +23,19 @@ int __stdcall wWinMain(
 
 		float cps = inputmath::getRandomFloat(config::minCPS, config::maxCPS + 1);
 
+		if (GetAsyncKeyState(VK_F6) & 1 && !wasPressed)
+		{
+			wasPressed = true;
+			config::enabled = !config::enabled;
+		}
+		else { wasPressed = false; }
+
 		if (GetAsyncKeyState(VK_LBUTTON) && config::enabled && GetForegroundWindow() != gui::window)
 		{
-			input::sendClick();
+			if (config::mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
+				continue;
+
+			input::sendClick(config::blockChance);
 			input::sendJitter(config::jitter);
 		}
 

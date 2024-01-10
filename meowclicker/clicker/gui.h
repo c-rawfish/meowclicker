@@ -4,16 +4,18 @@
 namespace config
 {
 	inline bool enabled = false;
+	inline bool mcWindow = false;
 	inline float minCPS = 12;
 	inline float maxCPS = 17;
 	inline float jitter = 0;
+	inline float blockChance = 0;
 }
 
 // skidded from cazz
 namespace gui
 {
-	constexpr int WIDTH = 250;
-	constexpr int HEIGHT = 175;
+	constexpr int WIDTH = 350;
+	constexpr int HEIGHT = 235;
 
 	inline bool isRunning = true;
 
