@@ -25,7 +25,7 @@ After following these steps you will have a fully functioning build of meowclick
 These issues are known problems with meowclicker. They will be fixed soon.
 Alternatively, if you're tired of waiting, open a pull request and contribute!
 
-- [Triggers certain anti-virus programs](https://www.virustotal.com/gui/file/b4afef03df82fd9ae2ec34ced99635c9d8561d288996ac50b8135ab803b912ed?nocache=1) (likely caused by Windows API calls)
+- [Triggers certain anti-virus programs](https://www.virustotal.com/gui/file/97e670383a7dc272621a864006caea17b203324e3b57fa6807b070cfc9337fa4?nocache=1) (likely caused by Windows API calls)
 - Randomization tends to average out and stay at a CPS count towards the middle of your defined range
 - Continues to spam when looking at blocks, preventing you from breaking blocks and triggering some anti-cheat programs (Minecraft)
 
