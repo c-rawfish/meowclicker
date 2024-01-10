@@ -24,6 +24,7 @@ Alternatively, if you're tired of waiting, open a pull request and contribute!
 
 - [Triggers certain anti-virus programs](https://www.virustotal.com/gui/file/b4afef03df82fd9ae2ec34ced99635c9d8561d288996ac50b8135ab803b912ed?nocache=1) (likely caused by Windows API calls)
 - Randomization tends to average out and stay at a CPS count towards the middle of your defined range
+- Continues to spam when looking at blocks, preventing you from breaking blocks and triggering some anti-cheat programs (Minecraft)
 
 ## Coming soon
 Features to be added soon!
@@ -35,3 +36,4 @@ Alternatively, if you're tired of waiting, open a pull request and contribute!
 - Config saving
 - Additional customization options
 - Window selector (only click on certain windows, like Minecraft)
+- Autoblock
