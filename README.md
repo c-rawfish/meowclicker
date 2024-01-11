@@ -9,6 +9,7 @@
 - Toggle hotkey (F6)
 - Auto BlockHit
 - "Minecraft Window Only" checkbox
+- Right clicker
 
 ## Install
 To get the latest version of meowclicker, navigate to the releases tab and download the latest version.
@@ -34,6 +35,5 @@ Features to be added soon!
 Alternatively, if you're tired of waiting, open a pull request and contribute!
 
 - Click sounds
-- Bridge/right clicker
 - Config saving
 - Additional customization options
