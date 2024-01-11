@@ -56,7 +56,7 @@ namespace input
 	{
 		while (gui::isRunning)
 		{
-			float cps = inputmath::getRandomFloat(config::minCPS, config::maxCPS + 1);
+			float cps = inputmath::getRandomFloat(config::minCPS, config::maxCPS);
 			int key = config::rightClick ? VK_RBUTTON : VK_LBUTTON;
 			bool clicked = false;
 
