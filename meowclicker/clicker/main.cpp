@@ -10,9 +10,11 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	gui::CreateHWindow("meowclicker v1.1");
+	gui::CreateHWindow("meowclicker v1.2");
 	gui::CreateDevice();
 	gui::CreateImGui();
+
+	std::thread clickThread(input::clickLoop);
 
 	bool wasPressed = false;
 	while (gui::isRunning)
@@ -20,8 +22,6 @@ int __stdcall wWinMain(
 		gui::BeginRender();
 		gui::Render();
 		gui::EndRender();
-
-		float cps = inputmath::getRandomFloat(config::minCPS, config::maxCPS + 1);
 
 		if (GetAsyncKeyState(VK_F6))
 		{
@@ -33,17 +33,10 @@ int __stdcall wWinMain(
 		}
 		else { wasPressed = false; }
 
-		if (GetAsyncKeyState(VK_LBUTTON) && config::enabled && GetForegroundWindow() != gui::window)
-		{
-			if (config::mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
-				continue;
-
-			input::sendClick(config::blockChance);
-			input::sendJitter(config::jitter);
-		}
-
-		std::this_thread::sleep_for(std::chrono::milliseconds((long)inputmath::cpsToDelay(cps)));
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 	}
+
+	clickThread.detach();
 
 	gui::DestroyImGui();
 	gui::DestroyDevice();

@@ -4,7 +4,7 @@
 
 namespace inputmath
 {
-	int getRandomInt(int min, int max);
+	int getRandomInt(int min, int maxExclusive);
 	float getRandomFloat(float min, float max);
 
 	float cpsToDelay(float cps);
@@ -12,6 +12,7 @@ namespace inputmath
 
 namespace input
 {
-	void sendClick(float blockChance);
+	void sendClick(float blockChance, bool rightClick);
 	void sendJitter(float jitterFactor);
+	void clickLoop();
 }

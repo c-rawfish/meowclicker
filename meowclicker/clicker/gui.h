@@ -4,6 +4,7 @@
 namespace config
 {
 	inline bool enabled = false;
+	inline bool rightClick = false;
 	inline bool mcWindow = false;
 	inline float minCPS = 12;
 	inline float maxCPS = 17;
@@ -15,7 +16,7 @@ namespace config
 namespace gui
 {
 	constexpr int WIDTH = 350;
-	constexpr int HEIGHT = 235;
+	constexpr int HEIGHT = 250;
 
 	inline bool isRunning = true;
 

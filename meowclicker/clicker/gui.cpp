@@ -4,6 +4,8 @@
 #include "../imgui/imgui_impl_dx9.h"
 #include "../imgui/imgui_impl_win32.h"
 
+#include <string>
+
 // skidded from cazz
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
@@ -246,7 +248,7 @@ void gui::Render() noexcept
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
 	ImGui::Begin(
-		"meowclicker v1.1",
+		"meowclicker v1.2",
 		&isRunning,
 		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoSavedSettings |
@@ -257,10 +259,11 @@ void gui::Render() noexcept
 	ImGui::Checkbox("enabled", &config::enabled);
 	ImGui::Checkbox("minecraft window only", &config::mcWindow);
 	ImGui::Text("toggle hotkey is f6");
-	ImGui::Text("hold lmb when enabled to click");
+	ImGui::Text("hold %s when enabled to click", config::rightClick ? "rmb" : "lmb");
 
 	ImGui::NewLine();
 
+	ImGui::Checkbox("right click", &config::rightClick);
 	ImGui::SliderFloat("min cps", &config::minCPS, 0, 20, "%.3f");
 	ImGui::SliderFloat("max cps", &config::maxCPS, 0, 20, "%.3f");
 	ImGui::SliderFloat("jitter", &config::jitter, 0, 2, "%.3f");
