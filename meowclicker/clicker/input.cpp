@@ -57,9 +57,10 @@ namespace input
 		while (gui::isRunning)
 		{
 			float cps = inputmath::getRandomFloat(config::minCPS, config::maxCPS + 1);
+			int key = config::rightClick ? VK_RBUTTON : VK_LBUTTON;
 			bool clicked = false;
 
-			if (GetAsyncKeyState(VK_LBUTTON) && config::enabled && GetForegroundWindow() != gui::window)
+			if (GetAsyncKeyState(key) && config::enabled && GetForegroundWindow() != gui::window)
 			{
 				if (config::mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
 					continue;
