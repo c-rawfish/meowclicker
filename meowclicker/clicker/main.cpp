@@ -1,8 +1,7 @@
-#include "gui.h"
-#include "input.h"
+#include "gui.hpp"
+#include "input.hpp"
 
 #include <thread>
-#include <iostream>
 
 int __stdcall wWinMain(
 	HINSTANCE instance,
@@ -10,18 +9,18 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	gui::CreateHWindow("meowclicker v1.2");
-	gui::CreateDevice();
-	gui::CreateImGui();
+	gui::createHWindow("meowclicker v1.2");
+	gui::createDevice();
+	gui::createImGui();
 
 	std::thread clickThread(input::clickLoop);
 
 	bool wasPressed = false;
 	while (gui::isRunning)
 	{
-		gui::BeginRender();
-		gui::Render();
-		gui::EndRender();
+		gui::beginRender();
+		gui::render();
+		gui::endRender();
 
 		if (GetAsyncKeyState(VK_F6))
 		{
@@ -33,14 +32,14 @@ int __stdcall wWinMain(
 		}
 		else { wasPressed = false; }
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
 	}
 
 	clickThread.detach();
 
-	gui::DestroyImGui();
-	gui::DestroyDevice();
-	gui::DestroyHWindow();
+	gui::destroyImGui();
+	gui::destroyDevice();
+	gui::destroyHWindow();
 
 	return EXIT_SUCCESS;
 }

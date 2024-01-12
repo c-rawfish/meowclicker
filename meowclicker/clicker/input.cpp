@@ -1,11 +1,14 @@
-#include "input.h"
-#include "gui.h"
+#include "input.hpp"
+#include "gui.hpp"
 
 #include <thread>
+#include <cstdint>
+#include <random>
+#include <Windows.h>
 
 namespace inputmath
 {
-	float getRandomFloat(float min, float max)
+	float getRandomFloat(float min, float max) noexcept
 	{
 		std::random_device                  rand_dev;
 		std::mt19937                        gen(rand_dev());
@@ -14,7 +17,7 @@ namespace inputmath
 		return dist(gen);
 	}
 
-	float cpsToDelay(float cps)
+	float cpsToDelay(float cps) noexcept
 	{
 		return 1000 / cps;
 	}
@@ -25,7 +28,7 @@ namespace input
 	POINT mousePos{ 0, 0 };
 	HWND foreground{ GetForegroundWindow() };
 
-	void sendClick(float blockChance, bool rightClick)
+	void sendClick(float blockChance, bool rightClick) noexcept
 	{
 		GetCursorPos(&mousePos);
 		foreground = GetForegroundWindow();
@@ -41,10 +44,10 @@ namespace input
 		PostMessageA(foreground, rightClick ? WM_RBUTTONUP : WM_LBUTTONUP, 0, mouseParam);
 	}
 
-	void sendJitter(float jitterFactor)
+	void sendJitter(float jitterFactor) noexcept
 	{
-		float jitterX = inputmath::getRandomFloat(-0.5F, 0.5F) * jitterFactor;
-		float jitterY = inputmath::getRandomFloat(-0.5F, 0.5F) * jitterFactor;
+		float jitterX = inputmath::getRandomFloat(-jitterBase, jitterBase) * jitterFactor;
+		float jitterY = inputmath::getRandomFloat(-jitterBase, jitterBase) * jitterFactor;
 
 		mousePos.x += jitterX;
 		mousePos.y += jitterY;
@@ -52,17 +55,21 @@ namespace input
 		SetCursorPos(mousePos.x, mousePos.y);
 	}
 
-	void clickLoop()
+	void clickLoop() noexcept
 	{
+		bool clicked = false;
+
 		while (gui::isRunning)
 		{
 			float cps = inputmath::getRandomFloat(config::minCPS, config::maxCPS);
 			int key = config::rightClick ? VK_RBUTTON : VK_LBUTTON;
-			bool clicked = false;
+
+			clicked = false;
 
 			if (GetAsyncKeyState(key) && config::enabled && GetForegroundWindow() != gui::window)
 			{
-				if (config::mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
+				// continue in loop if trying to click on non-minecraft window with "Minecraft Window Only" enabled
+				if (config::mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr)) 
 					continue;
 
 				input::sendClick(config::blockChance, config::rightClick);
@@ -72,11 +79,11 @@ namespace input
 
 			if (clicked) // sleep for randomized amount of time if clicking
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds((long)inputmath::cpsToDelay(cps)));
+				std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<uint64_t>(inputmath::cpsToDelay(cps))));
 			}
 			else // else, update at same rate as GUI
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(16));
+				std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
 			}
 		}
 	}

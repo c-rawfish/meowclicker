@@ -71,10 +71,10 @@
     <ClInclude Include="imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="clicker\gui.h">
+    <ClInclude Include="clicker\gui.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="clicker\input.h">
+    <ClInclude Include="clicker\input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
