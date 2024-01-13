@@ -2,24 +2,33 @@
 #include <d3d9.h>
 #include <string>
 #include <format>
+#include <vector>
 
 namespace config
 {
-	inline bool enabled = false;
-	inline bool rightClick = false;
-	inline bool mcWindow = false;
-	inline float minCPS = 12;
-	inline float maxCPS = 17;
-	inline float jitter = 0;
-	inline float blockChance = 0;
+	constexpr inline float MAX_RIGHT_CPS = 50;
+	constexpr inline float MAX_LEFT_CPS = 20;
+
+	struct clicker
+	{
+		bool enabled = false;
+		int key = VK_LBUTTON;
+		int toggleKey = VK_F6;
+		bool rightClick = false;
+		bool mcWindow = false;
+		float minCPS = 12;
+		float maxCPS = 17;
+		float jitter = 0;
+		float blockChance = 0;
+	};
 }
 
 // skidded from cazz
 namespace gui
 {
 	inline constexpr std::string name = "meowclicker";
-	inline constexpr std::string version = "v1.2";
-	inline const std::string title = std::format("{} {}", name, version).c_str();
+	inline constexpr std::string version = "v1.3";
+	inline const std::string title = std::format("{} {}", name, version);
 
 	constexpr int updateDelay = 16;
 
@@ -49,5 +58,5 @@ namespace gui
 
 	void beginRender() noexcept;
 	void endRender() noexcept;
-	void render() noexcept;
+	void render(std::vector<config::clicker>* clickers) noexcept;
 }

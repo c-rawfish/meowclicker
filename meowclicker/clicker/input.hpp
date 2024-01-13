@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include "gui.hpp"
 
 namespace inputmath
 {
@@ -13,5 +15,5 @@ namespace input
 
 	void sendClick(const float blockChance, const bool rightClick) noexcept;
 	void sendJitter(const float jitterFactor) noexcept;
-	void clickLoop() noexcept;
+	void clickLoop(std::vector<config::clicker>* clickers) noexcept;
 }

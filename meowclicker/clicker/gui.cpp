@@ -245,12 +245,31 @@ namespace gui
 	}
 
 	bool waitingForHotkey = false;
-	void render() noexcept
+	int tab = 0;
+
+	void renderBasicTab(config::clicker* clicker, float maxCPS) noexcept // renders the basic settings of a clicker tab
+	{
+		ImGui::Checkbox("enabled", &clicker->enabled);
+		ImGui::Checkbox("minecraft window only", &clicker->mcWindow);
+
+		ImGui::NewLine();
+
+		ImGui::SliderFloat("min cps", &clicker->minCPS, 0, maxCPS, "%.3f");
+		ImGui::SliderFloat("max cps", &clicker->maxCPS, 0, maxCPS, "%.3f");
+		ImGui::SliderFloat("jitter", &clicker->jitter, 0, 2, "%.3f");
+
+		if (clicker->minCPS > clicker->maxCPS)
+		{
+			clicker->maxCPS = clicker->minCPS;
+		}
+	}
+
+	void render(std::vector<config::clicker>* clickers) noexcept
 	{
 		ImGui::SetNextWindowPos({ 0, 0 });
 		ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
 		ImGui::Begin(
-			title,
+			title.c_str(),
 			&isRunning,
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoSavedSettings |
@@ -258,22 +277,31 @@ namespace gui
 			ImGuiWindowFlags_NoMove
 		);
 
-		ImGui::Checkbox("enabled", &config::enabled);
-		ImGui::Checkbox("minecraft window only", &config::mcWindow);
-		ImGui::Text("toggle hotkey is f6");
-		ImGui::Text("hold %s when enabled to click", config::rightClick ? "rmb" : "lmb");
+		// dont ask me how i found out these values would work, it kinda centers the tabs but it might not be perfect so idk
+		if (ImGui::Button("left clicker", ImVec2(100, 25))) { tab = 0; }
+		ImGui::SameLine(100 + ImGui::GetStyle().FramePadding.x, 21);
+		if (ImGui::Button("right clicker", ImVec2(100, 25))) { tab = 1; }
+		ImGui::SameLine(216 + ImGui::GetStyle().FramePadding.x, 21);
+		if (ImGui::Button("config", ImVec2(100, 25))) { tab = 2; }
+		ImGui::Separator();
 
-		ImGui::NewLine();
-
-		ImGui::Checkbox("right click", &config::rightClick);
-		ImGui::SliderFloat("min cps", &config::minCPS, 0, 20, "%.3f");
-		ImGui::SliderFloat("max cps", &config::maxCPS, 0, 20, "%.3f");
-		ImGui::SliderFloat("jitter", &config::jitter, 0, 2, "%.3f");
-		ImGui::SliderFloat("blockhit chance", &config::blockChance, 0, 100, "%.3f");
-
-		if (config::minCPS > config::maxCPS)
+		switch (tab)
 		{
-			config::maxCPS = config::minCPS;
+		case 0: {
+			config::clicker* clicker = &clickers->at(0);
+			renderBasicTab(clicker, config::MAX_LEFT_CPS); // assumes the left clicker always comes first (which it does)
+			ImGui::SliderFloat("blockhit chance", &clicker->blockChance, 0, 100, "%.3f");
+			break;
+		}
+		case 1: {
+			config::clicker* clicker = &clickers->at(1);
+			renderBasicTab(clicker, config::MAX_RIGHT_CPS);
+			break;
+		}
+		case 2: {
+			ImGui::Text("coming soon!");
+			break;
+		}
 		}
 
 		ImGui::End();
