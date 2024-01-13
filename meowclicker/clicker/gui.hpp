@@ -19,7 +19,7 @@ namespace gui
 {
 	inline constexpr std::string name = "meowclicker";
 	inline constexpr std::string version = "v1.2";
-	inline const char* title = std::format("{} {}", name, version).c_str();
+	inline const std::string title = std::format("{} {}", name, version).c_str();
 
 	constexpr int updateDelay = 16;
 
