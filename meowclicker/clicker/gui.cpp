@@ -247,15 +247,15 @@ namespace gui
 	bool waitingForHotkey = false;
 	int tab = 0;
 
-	void renderBasicTab(config::clicker* clicker, float maxCPS) noexcept // renders the basic settings of a clicker tab
+	void renderBasicTab(config::clicker* clicker) noexcept // renders the basic settings of a clicker tab
 	{
 		ImGui::Checkbox("enabled", &clicker->enabled);
 		ImGui::Checkbox("minecraft window only", &clicker->mcWindow);
 
 		ImGui::NewLine();
 
-		ImGui::SliderFloat("min cps", &clicker->minCPS, 0, maxCPS, "%.3f");
-		ImGui::SliderFloat("max cps", &clicker->maxCPS, 0, maxCPS, "%.3f");
+		ImGui::SliderFloat("min cps", &clicker->minCPS, 0, 20, "%.3f");
+		ImGui::SliderFloat("max cps", &clicker->maxCPS, 0, 20, "%.3f");
 		ImGui::SliderFloat("jitter", &clicker->jitter, 0, 2, "%.3f");
 
 		if (clicker->minCPS > clicker->maxCPS)
@@ -289,13 +289,13 @@ namespace gui
 		{
 		case 0: {
 			config::clicker* clicker = &clickers->at(0);
-			renderBasicTab(clicker, config::MAX_LEFT_CPS); // assumes the left clicker always comes first (which it does)
+			renderBasicTab(clicker); // assumes the left clicker always comes first (which it does)
 			ImGui::SliderFloat("blockhit chance", &clicker->blockChance, 0, 100, "%.3f");
 			break;
 		}
 		case 1: {
 			config::clicker* clicker = &clickers->at(1);
-			renderBasicTab(clicker, config::MAX_RIGHT_CPS);
+			renderBasicTab(clicker);
 			break;
 		}
 		case 2: {
