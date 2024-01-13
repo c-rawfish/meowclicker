@@ -8,7 +8,7 @@
 
 namespace inputmath
 {
-	float getRandomFloat(float min, float max) noexcept
+	float getRandomFloat(const float min, const float max) noexcept
 	{
 		std::random_device                  rand_dev;
 		std::mt19937                        gen(rand_dev());
@@ -17,7 +17,7 @@ namespace inputmath
 		return dist(gen);
 	}
 
-	float cpsToDelay(float cps) noexcept
+	float cpsToDelay(const float cps) noexcept
 	{
 		return 1000 / cps;
 	}
@@ -28,7 +28,7 @@ namespace input
 	POINT mousePos{ 0, 0 };
 	HWND foreground{ GetForegroundWindow() };
 
-	void sendClick(float blockChance, bool rightClick) noexcept
+	void sendClick(const float blockChance, const bool rightClick) noexcept
 	{
 		GetCursorPos(&mousePos);
 		foreground = GetForegroundWindow();
@@ -44,7 +44,7 @@ namespace input
 		PostMessageA(foreground, rightClick ? WM_RBUTTONUP : WM_LBUTTONUP, 0, mouseParam);
 	}
 
-	void sendJitter(float jitterFactor) noexcept
+	void sendJitter(const float jitterFactor) noexcept
 	{
 		float jitterX = inputmath::getRandomFloat(-jitterBase, jitterBase) * jitterFactor;
 		float jitterY = inputmath::getRandomFloat(-jitterBase, jitterBase) * jitterFactor;

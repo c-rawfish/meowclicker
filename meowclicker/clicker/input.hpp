@@ -2,16 +2,16 @@
 
 namespace inputmath
 {
-	float getRandomFloat(float min, float max) noexcept;
+	float getRandomFloat(const float min, const float max) noexcept;
 
-	float cpsToDelay(float cps) noexcept;
+	float cpsToDelay(const float cps) noexcept;
 }
 
 namespace input
 {
-	const float jitterBase = 0.5F;
+	inline constexpr float jitterBase = 0.5F;
 
-	void sendClick(float blockChance, bool rightClick) noexcept;
-	void sendJitter(float jitterFactor) noexcept;
+	void sendClick(const float blockChance, const bool rightClick) noexcept;
+	void sendJitter(const float jitterFactor) noexcept;
 	void clickLoop() noexcept;
 }

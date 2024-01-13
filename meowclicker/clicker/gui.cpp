@@ -4,7 +4,7 @@
 #include "../imgui/imgui_impl_dx9.h"
 #include "../imgui/imgui_impl_win32.h"
 
-#include <string>
+#include <format>
 
 // skidded from cazz
 
@@ -250,7 +250,7 @@ namespace gui
 		ImGui::SetNextWindowPos({ 0, 0 });
 		ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
 		ImGui::Begin(
-			"meowclicker v1.2",
+			title,
 			&isRunning,
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoSavedSettings |

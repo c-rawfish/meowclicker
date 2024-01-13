@@ -9,11 +9,12 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	gui::createHWindow("meowclicker v1.2");
+	gui::createHWindow(gui::title);
 	gui::createDevice();
 	gui::createImGui();
 
-	std::thread clickThread(input::clickLoop);
+	std::jthread clickThread(input::clickLoop);
+	clickThread.detach();
 
 	bool wasPressed = false;
 	while (gui::isRunning)
@@ -34,8 +35,6 @@ int __stdcall wWinMain(
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
 	}
-
-	clickThread.detach();
 
 	gui::destroyImGui();
 	gui::destroyDevice();

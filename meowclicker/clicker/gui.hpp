@@ -1,5 +1,7 @@
 #pragma once
 #include <d3d9.h>
+#include <string>
+#include <format>
 
 namespace config
 {
@@ -15,6 +17,10 @@ namespace config
 // skidded from cazz
 namespace gui
 {
+	inline constexpr std::string name = "meowclicker";
+	inline constexpr std::string version = "v1.2";
+	inline const char* title = std::format("{} {}", name, version).c_str();
+
 	constexpr int updateDelay = 16;
 
 	constexpr int WIDTH = 350;
