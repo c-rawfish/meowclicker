@@ -36,6 +36,7 @@ Features to be added soon!
 Alternatively, if you're tired of waiting, open a pull request and contribute!
 
 - Click sounds
+- Recorder (record clicks as macro and play back)
 - Config saving
 - Additional customization options
 
