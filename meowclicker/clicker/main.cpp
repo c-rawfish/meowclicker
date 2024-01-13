@@ -2,6 +2,7 @@
 #include "input.hpp"
 
 #include <thread>
+#include <vector>
 
 int __stdcall wWinMain(
 	HINSTANCE instance,
@@ -9,18 +10,32 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	gui::createHWindow(gui::title);
+	config::Clicker leftClicker;
+
+	config::Clicker rightClicker;
+	rightClicker.key = VK_RBUTTON;
+	rightClicker.toggleKey = VK_F7;
+	rightClicker.blockChance = 0;
+	rightClicker.rightClick = true;
+
+	config::Clicker* current = &leftClicker;
+
+	std::vector<config::Clicker> clickers;
+	clickers.push_back(leftClicker);
+	clickers.push_back(rightClicker);
+
+	gui::createHWindow(gui::title.c_str());
 	gui::createDevice();
 	gui::createImGui();
 
-	std::jthread clickThread(input::clickLoop);
+	std::jthread clickThread(input::clickLoop, &clickers);
 	clickThread.detach();
 
 	bool wasPressed = false;
 	while (gui::isRunning)
 	{
 		gui::beginRender();
-		gui::render();
+		gui::render(&clickers);
 		gui::endRender();
 
 		if (GetAsyncKeyState(VK_F6))
@@ -28,7 +43,7 @@ int __stdcall wWinMain(
 			if (!wasPressed)
 			{
 				wasPressed = true;
-				config::enabled = !config::enabled;
+				current->enabled = !current->enabled;
 			}
 		}
 		else { wasPressed = false; }
