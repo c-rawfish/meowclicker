@@ -38,3 +38,5 @@ Alternatively, if you're tired of waiting, open a pull request and contribute!
 - Click sounds
 - Config saving
 - Additional customization options
+
+  **special thanks to elec (pichumeta on github) for giving some great advice with this project!**
