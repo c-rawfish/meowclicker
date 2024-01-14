@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include "gui.hpp"
+#include "config.hpp"
+
+void preciseSleep(double seconds);
 
 namespace inputmath
 {
@@ -14,6 +17,7 @@ namespace input
 	inline constexpr float jitterBase = 0.5F;
 
 	void sendClick(float blockChance, bool rightClick) noexcept;
-	void sendJitter(const float jitterFactor) noexcept;
-	void clickLoop(const std::vector<config::Clicker> &clickers) noexcept;
+	void sendJitter(float jitterFactor) noexcept;
+
+	void clickLoopSetup(const std::vector<Clicker> &clickers);
 }

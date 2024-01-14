@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="clicker\gui.cpp" />
     <ClCompile Include="clicker\main.cpp" />
+    <ClCompile Include="clicker\config.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="clicker\gui.hpp" />
+    <ClInclude Include="clicker\config.hpp" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx9.h" />

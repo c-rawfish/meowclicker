@@ -5,7 +5,7 @@
 #include <random>
 #include <Windows.h>
 #include <chrono>
-#include <math.h>
+#include <cmath>
 
 void preciseSleep(double seconds) {
 	using namespace std;
@@ -39,7 +39,7 @@ void preciseSleep(double seconds) {
 
 namespace inputmath
 {
-	float getRandomFloat(const float min, const float max) noexcept
+	float getRandomFloat(float min, float max) noexcept
 	{
 		std::random_device                  rand_dev;
 		std::mt19937                        gen(rand_dev());
@@ -48,7 +48,7 @@ namespace inputmath
 		return dist(gen);
 	}
 
-	float cpsToDelay(const float cps) noexcept
+	float cpsToDelay(float cps) noexcept
 	{
 		return 1000 / cps;
 	}
@@ -59,7 +59,7 @@ namespace input
 	POINT mousePos{ 0, 0 };
 	HWND foreground{ GetForegroundWindow() };
 
-	void sendClick(const float blockChance, const bool rightClick) noexcept
+	void sendClick(float blockChance, bool rightClick) noexcept
 	{
 		GetCursorPos(&mousePos);
 		foreground = GetForegroundWindow();
@@ -75,7 +75,7 @@ namespace input
 		PostMessageA(foreground, rightClick ? WM_RBUTTONUP : WM_LBUTTONUP, 0, mouseParam);
 	}
 
-	void sendJitter(const float jitterFactor) noexcept
+	void sendJitter(float jitterFactor) noexcept
 	{
 		float jitterX = inputmath::getRandomFloat(-jitterBase, jitterBase) * jitterFactor;
 		float jitterY = inputmath::getRandomFloat(-jitterBase, jitterBase) * jitterFactor;
@@ -86,75 +86,12 @@ namespace input
 		SetCursorPos(mousePos.x, mousePos.y);
 	}
 
-	void clickLoop(const std::vector<config::Clicker> &clickers) noexcept
+	void clickLoopSetup(const std::vector<Clicker> &clickers)
 	{
-		//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
-		PROCESS_POWER_THROTTLING_STATE PowerThrottling;
-		RtlZeroMemory(&PowerThrottling, sizeof(PowerThrottling));
-		PowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION;
-
-		PowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION;
-		PowerThrottling.StateMask = 0;
-
-		SetProcessInformation(GetCurrentProcess(),
-							ProcessPowerThrottling,
-							&PowerThrottling,
-							sizeof(PowerThrottling));
-		bool clicked = false;
-
-		while (gui::isRunning)
+		for (auto &clicker : clickers)
 		{
-			for (const auto &clicker : clickers) {
-				float cps = inputmath::getRandomFloat(clicker.minCPS, clicker.maxCPS);
-				clicked = false;
-
-				if (GetAsyncKeyState(clicker.key) && clicker.enabled && GetForegroundWindow() != gui::window)
-				{
-					// continue in loop if trying to click on non-minecraft window with "Minecraft Window Only" enabled
-					if (clicker.mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
-						continue;
-
-					input::sendClick(clicker.blockChance, clicker.rightClick);
-					input::sendJitter(clicker.jitter);
-					clicked = true;
-				}
-
-				if (clicked) // sleep for randomized amount of time if clicking
-				{
-					preciseSleep(inputmath::cpsToDelay(cps) / 1000);
-				}
-				else // else, update at same rate as GUI
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
-				}
-			}
-			/*for (int i = 0; i < clickers->size(); i++)
-			{
-				config::Clicker* clicker = &clickers->at(i);
-
-				float cps = inputmath::getRandomFloat(clickers->at(i).minCPS, clickers->at(i).maxCPS);
-				clicked = false;
-
-				if (GetAsyncKeyState(clicker->key) && clicker->enabled && GetForegroundWindow() != gui::window)
-				{
-					// continue in loop if trying to click on non-minecraft window with "Minecraft Window Only" enabled
-					if (clicker->mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
-						continue;
-
-					input::sendClick(clicker->blockChance, clicker->rightClick);
-					input::sendJitter(clicker->jitter);
-					clicked = true;
-				}
-
-				if (clicked) // sleep for randomized amount of time if clicking
-				{
-					preciseSleep(inputmath::cpsToDelay(cps) / 1000);
-				}
-				else // else, update at same rate as GUI
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
-				}
-			}*/
+			std::jthread clickThread(&Clicker::clickLoop, clicker);
+			clickThread.detach();
 		}
 	}
 }

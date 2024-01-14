@@ -247,24 +247,26 @@ namespace gui
 	bool waitingForHotkey = false;
 	int tab = 0;
 
-	void renderBasicTab(config::clicker* clicker) noexcept // renders the basic settings of a clicker tab
+	void renderBasicTab(Clicker* clicker) noexcept // renders the basic settings of a clicker tab
 	{
-		ImGui::Checkbox("enabled", &clicker->enabled);
-		ImGui::Checkbox("minecraft window only", &clicker->mcWindow);
+		ImGui::Checkbox("enabled", clicker->getEnabledPtr());
+		ImGui::Checkbox("minecraft window only", clicker->getMCWindowOnlyPtr());
+		ImGui::Text(std::format("hold {} when enabled to autoclick", clicker->getRightClick() ? "rmb" : "lmb").c_str());
+		ImGui::Text(std::format("press {} to toggle enabled", clicker->getRightClick() ? "f7" : "f6").c_str());
 
 		ImGui::NewLine();
 
-		ImGui::SliderFloat("min cps", &clicker->minCPS, 0, 20, "%.3f");
-		ImGui::SliderFloat("max cps", &clicker->maxCPS, 0, 20, "%.3f");
-		ImGui::SliderFloat("jitter", &clicker->jitter, 0, 2, "%.3f");
+		ImGui::SliderFloat("min cps", clicker->getMinCPSPtr(), 0, 20, "%.3f");
+		ImGui::SliderFloat("max cps", clicker->getMaxCPSPtr(), 0, 20, "%.3f");
+		ImGui::SliderFloat("jitter", clicker->getJitterPtr(), 0, 2, "%.3f");
 
-		if (clicker->minCPS > clicker->maxCPS)
+		if (clicker->getMinCPS() > clicker->getMaxCPS())
 		{
-			clicker->maxCPS = clicker->minCPS;
+			clicker->setMaxCPS(clicker->getMinCPS());
 		}
 	}
 
-	void render(std::vector<config::clicker>* clickers) noexcept
+	void render(std::vector<Clicker>* clickers) noexcept
 	{
 		ImGui::SetNextWindowPos({ 0, 0 });
 		ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
@@ -288,13 +290,13 @@ namespace gui
 		switch (tab)
 		{
 		case 0: {
-			config::clicker* clicker = &clickers->at(0);
+			Clicker* clicker = &clickers->at(0);
 			renderBasicTab(clicker); // assumes the left clicker always comes first (which it does)
-			ImGui::SliderFloat("blockhit chance", &clicker->blockChance, 0, 100, "%.3f");
+			ImGui::SliderFloat("blockhit chance", clicker->getBlockChancePtr(), 0, 100, "%.3f");
 			break;
 		}
 		case 1: {
-			config::clicker* clicker = &clickers->at(1);
+			Clicker* clicker = &clickers->at(1);
 			renderBasicTab(clicker);
 			break;
 		}
