@@ -10,9 +10,9 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	config::clicker leftClicker{};
+	config::clicker leftClicker{ true, VK_LBUTTON, ... };
 
-	config::clicker rightClicker{};
+	config::clicker rightClicker{ true, VK_RBUTTON, VK_F7, true, ... };
 	rightClicker.key = VK_RBUTTON;
 	rightClicker.toggleKey = VK_F7;
 	rightClicker.blockChance = 0;
@@ -20,9 +20,9 @@ int __stdcall wWinMain(
 
 	config::clicker* current = &leftClicker;
 
-	std::vector<config::clicker> clickers;
-	clickers.push_back(leftClicker);
-	clickers.push_back(rightClicker);
+	std::vector<config::clicker> clickers = { leftClicker, rightClicker };
+	//clickers.push_back(leftClicker);
+	//clickers.push_back(rightClicker);
 
 	gui::createHWindow(gui::title.c_str());
 	gui::createDevice();

@@ -86,28 +86,36 @@ namespace input
 		SetCursorPos(mousePos.x, mousePos.y);
 	}
 
-	void clickLoop(std::vector<config::clicker>* clickers) noexcept
+	void clickLoop(const std::vector<config::Clicker> &clickers) noexcept
 	{
-		SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
+		//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
+		PROCESS_POWER_THROTTLING_STATE PowerThrottling;
+		RtlZeroMemory(&PowerThrottling, sizeof(PowerThrottling));
+		PowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION;
+
+		PowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION;
+		PowerThrottling.StateMask = 0;
+
+		SetProcessInformation(GetCurrentProcess(),
+							ProcessPowerThrottling,
+							&PowerThrottling,
+							sizeof(PowerThrottling));
 		bool clicked = false;
 
 		while (gui::isRunning)
 		{
-			for (int i = 0; i < clickers->size(); i++)
-			{
-				config::clicker* clicker = &clickers->at(i);
-
-				float cps = inputmath::getRandomFloat(clickers->at(i).minCPS, clickers->at(i).maxCPS);
+			for (const auto &clicker : clickers) {
+				float cps = inputmath::getRandomFloat(clicker.minCPS, clicker.maxCPS);
 				clicked = false;
 
-				if (GetAsyncKeyState((*clicker).key) && (*clicker).enabled && GetForegroundWindow() != gui::window)
+				if (GetAsyncKeyState(clicker.key) && clicker.enabled && GetForegroundWindow() != gui::window)
 				{
 					// continue in loop if trying to click on non-minecraft window with "Minecraft Window Only" enabled
-					if ((*clicker).mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
+					if (clicker.mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
 						continue;
 
-					input::sendClick((*clicker).blockChance, (*clicker).rightClick);
-					input::sendJitter((*clicker).jitter);
+					input::sendClick(clicker.blockChance, clicker.rightClick);
+					input::sendJitter(clicker.jitter);
 					clicked = true;
 				}
 
@@ -120,6 +128,33 @@ namespace input
 					std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
 				}
 			}
+			/*for (int i = 0; i < clickers->size(); i++)
+			{
+				config::Clicker* clicker = &clickers->at(i);
+
+				float cps = inputmath::getRandomFloat(clickers->at(i).minCPS, clickers->at(i).maxCPS);
+				clicked = false;
+
+				if (GetAsyncKeyState(clicker->key) && clicker->enabled && GetForegroundWindow() != gui::window)
+				{
+					// continue in loop if trying to click on non-minecraft window with "Minecraft Window Only" enabled
+					if (clicker->mcWindow && GetForegroundWindow() != FindWindowA("LWJGL", nullptr))
+						continue;
+
+					input::sendClick(clicker->blockChance, clicker->rightClick);
+					input::sendJitter(clicker->jitter);
+					clicked = true;
+				}
+
+				if (clicked) // sleep for randomized amount of time if clicking
+				{
+					preciseSleep(inputmath::cpsToDelay(cps) / 1000);
+				}
+				else // else, update at same rate as GUI
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
+				}
+			}*/
 		}
 	}
 }
