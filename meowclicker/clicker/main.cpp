@@ -1,5 +1,6 @@
 #include "gui.hpp"
 #include "input.hpp"
+#include "config.hpp"
 
 #include <thread>
 #include <vector>
@@ -10,43 +11,22 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	config::Clicker leftClicker;
+	Clicker leftClicker(VK_LBUTTON, VK_F6, false, 0);
+	Clicker rightClicker(VK_RBUTTON, VK_F7, true, 0);
 
-	config::Clicker rightClicker;
-	rightClicker.key = VK_RBUTTON;
-	rightClicker.toggleKey = VK_F7;
-	rightClicker.blockChance = 0;
-	rightClicker.rightClick = true;
-
-	config::Clicker* current = &leftClicker;
-
-	std::vector<config::Clicker> clickers;
-	clickers.push_back(leftClicker);
-	clickers.push_back(rightClicker);
+	std::vector<Clicker> clickers{ leftClicker, rightClicker };
 
 	gui::createHWindow(gui::title.c_str());
 	gui::createDevice();
 	gui::createImGui();
 
-	std::jthread clickThread(input::clickLoop, &clickers);
-	clickThread.detach();
+	input::clickLoopSetup(std::ref(clickers));
 
-	bool wasPressed = false;
 	while (gui::isRunning)
 	{
 		gui::beginRender();
 		gui::render(&clickers);
 		gui::endRender();
-
-		if (GetAsyncKeyState(VK_F6))
-		{
-			if (!wasPressed)
-			{
-				wasPressed = true;
-				current->enabled = !current->enabled;
-			}
-		}
-		else { wasPressed = false; }
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));
 	}

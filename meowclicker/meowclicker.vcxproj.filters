@@ -45,6 +45,9 @@
     <ClCompile Include="clicker\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="clicker\config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -75,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="clicker\input.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clicker\config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
