@@ -28,7 +28,6 @@ Alternatively, if you're tired of waiting, open a pull request and contribute!
 
 - [Triggers certain anti-virus programs](https://www.virustotal.com/gui/file/97e670383a7dc272621a864006caea17b203324e3b57fa6807b070cfc9337fa4?nocache=1) (likely caused by Windows API calls)
 - Randomization tends to average out and stay at a CPS count towards the middle of your defined range
-- Can't click on non-windowed programs (fullscreen mode). For most games, this can be fixed under Video settings by selection Windowed or Windowed Fullscreen
 - Continues to spam when looking at blocks, preventing you from breaking blocks and triggering some anti-cheat programs (Minecraft)
 
 ## Coming soon
