@@ -26,7 +26,7 @@ int Clicker::getKey() const { return mKey; }
 int Clicker::getToggleKey() const { return mToggleKey; }
 bool Clicker::getRightClick() const { return mRightClick; }
 
-// only value ever being modified directly
+// only value ever being modified directly. could just use a pointer but this is more safe
 void Clicker::setMaxCPS(float cps) { mMaxCPS = cps; }
 
 void Clicker::startClickLoop()

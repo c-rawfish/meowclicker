@@ -242,8 +242,8 @@ void renderBasicTab(Clicker* clicker)
 {
 	ImGui::Checkbox("enabled", clicker->getEnabledPtr());
 	ImGui::Checkbox("minecraft window only", clicker->getMCWindowOnlyPtr());
-	ImGui::Text(std::format("hold {} when enabled to autoclick", clicker->getRightClick() ? "rmb" : "lmb").c_str());
-	ImGui::Text(std::format("press {} to toggle enabled", clicker->getRightClick() ? "f7" : "f6").c_str());
+	ImGui::Text("hold %s when enabled to autoclick", clicker->getRightClick() ? "rmb" : "lmb");
+	ImGui::Text("press %s to toggle enabled", clicker->getRightClick() ? "f7" : "f6");
 
 	ImGui::NewLine();
 
@@ -258,7 +258,7 @@ void renderBasicTab(Clicker* clicker)
 }
 
 int tab = 0;
-void gui::render(std::vector<Clicker>* clickers) noexcept
+void gui::render(Clicker* leftClicker, Clicker* rightClicker) noexcept
 {
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
@@ -281,16 +281,14 @@ void gui::render(std::vector<Clicker>* clickers) noexcept
 	switch (tab)
 	{
 	case 0: {
-		Clicker* clicker = &clickers->at(0);
-		renderBasicTab(clicker);
+		renderBasicTab(leftClicker);
 
-		ImGui::SliderFloat("blockhit chance", clicker->getBlockChancePtr(), 0, 100, "%.3f");
+		ImGui::SliderFloat("blockhit chance", leftClicker->getBlockChancePtr(), 0, 100, "%.3f");
 
 		break;
 	}
 	case 1: {
-		Clicker* clicker = &clickers->at(1);
-		renderBasicTab(clicker);
+		renderBasicTab(rightClicker);
 
 		break;
 	}

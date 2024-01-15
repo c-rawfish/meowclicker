@@ -3,7 +3,6 @@
 #include "clicker.hpp"
 
 #include <thread>
-#include <vector>
 
 int __stdcall wWinMain(
 	HINSTANCE instance,
@@ -13,7 +12,6 @@ int __stdcall wWinMain(
 {
 	Clicker leftClicker(VK_LBUTTON, VK_F6, false);
 	Clicker rightClicker(VK_RBUTTON, VK_F7, true);
-	std::vector<Clicker> clickers{ leftClicker, rightClicker };
 
 	gui::createHWindow(gui::title.c_str());
 	gui::createDevice();
@@ -22,7 +20,7 @@ int __stdcall wWinMain(
 	while (gui::isRunning)
 	{
 		gui::beginRender();
-		gui::render(&clickers);
+		gui::render(&leftClicker, &rightClicker);
 		gui::endRender();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(gui::updateDelay));

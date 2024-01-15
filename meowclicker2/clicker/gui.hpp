@@ -5,7 +5,6 @@
 #include <d3d9.h>
 #include <string>
 #include <format>
-#include <vector>
 
 namespace gui
 {
@@ -40,5 +39,5 @@ namespace gui
 
 	void beginRender() noexcept;
 	void endRender() noexcept;
-	void render(std::vector<Clicker>* clickers) noexcept;
+	void render(Clicker* leftClicker, Clicker* rightClicker) noexcept;
 }
