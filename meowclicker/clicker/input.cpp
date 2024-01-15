@@ -88,7 +88,7 @@ namespace input
 
 	void clickLoopSetup(const std::vector<Clicker> &clickers)
 	{
-		for (auto &clicker : clickers)
+		for (const auto &clicker : clickers)
 		{
 			std::jthread clickThread(&Clicker::clickLoop, clicker);
 			clickThread.detach();

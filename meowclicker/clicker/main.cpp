@@ -11,18 +11,16 @@ int __stdcall wWinMain(
 	PWSTR arguments,
 	int commandShow)
 {
-	Clicker leftClicker = Clicker(VK_LBUTTON, VK_F6, false, 0);
-	Clicker rightClicker = Clicker(VK_RBUTTON, VK_F7, true, 0);
+	Clicker leftClicker(VK_LBUTTON, VK_F6, false, 0);
+	Clicker rightClicker(VK_RBUTTON, VK_F7, true, 0);
 
-	std::vector<Clicker> clickers;
-	clickers.push_back(leftClicker);
-	clickers.push_back(rightClicker);
+	std::vector<Clicker> clickers{ leftClicker, rightClicker };
 
 	gui::createHWindow(gui::title.c_str());
 	gui::createDevice();
 	gui::createImGui();
 
-	input::clickLoopSetup(clickers);
+	input::clickLoopSetup(std::ref(clickers));
 
 	while (gui::isRunning)
 	{

@@ -6,7 +6,7 @@
 Clicker::Clicker(int key, int toggleKey, bool rightClick, float blockChance) :
 	mEnabled(false), mKey(key), mToggleKey(toggleKey), mRightClick(rightClick), mMCWindowOnly(false), mMinCPS(12), mMaxCPS(17), mJitter(0), mBlockChance(blockChance)
 {
-
+	
 }
 
 bool Clicker::getEnabled() const { return mEnabled; }

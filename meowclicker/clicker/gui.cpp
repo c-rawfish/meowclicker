@@ -244,7 +244,6 @@ namespace gui
 			resetDevice();
 	}
 
-	bool waitingForHotkey = false;
 	int tab = 0;
 
 	void renderBasicTab(Clicker* clicker) noexcept // renders the basic settings of a clicker tab
