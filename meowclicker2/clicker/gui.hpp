@@ -9,7 +9,7 @@
 namespace gui
 {
 	inline constexpr const char* name  = "meowclicker";
-	inline constexpr float version     = 2.0;
+	inline constexpr float version     = 1.3.1;
 	inline const     std::string title = std::format("{} v{:.2}", name, version);
 
 	inline constexpr int  WIDTH       = 500;
