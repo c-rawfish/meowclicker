@@ -18,6 +18,9 @@
     <ClInclude Include="clicker\gui.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="clicker\clicker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,13 +45,7 @@
     <ClInclude Include="imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="clicker\clicker.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clicker\maths.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clicker\input.hpp">
+    <ClInclude Include="clicker\math.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -57,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="clicker\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clicker\clicker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
@@ -80,13 +80,7 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="clicker\clicker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="clicker\maths.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="clicker\input.cpp">
+    <ClCompile Include="clicker\math.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
