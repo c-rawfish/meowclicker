@@ -14,6 +14,7 @@ Clicker::Clicker(int key, int toggleKey, bool rightClick) :
 	clickThread.detach();
 }
 
+// guidedhacking ahh code (will be fixed soon)
 bool* Clicker::getEnabledPtr() { return &mEnabled; }
 bool* Clicker::getMCWindowOnlyPtr() { return &mMCWindowOnly; }
 float* Clicker::getMinCPSPtr() { return &mMinCPS; }
