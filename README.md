@@ -7,7 +7,6 @@
 - Active toggle (use LMB to autoclick once enabled)
 - ImGUI user interface to control settings
 - Toggle hotkey (F6)
-- Auto BlockHit
 - "Minecraft Window Only" checkbox
 - Right clicker
 
